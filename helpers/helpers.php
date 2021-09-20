@@ -25,6 +25,24 @@ if (!function_exists('getIpAddress')) {
         return $ip->getIpAddress($convertToInteger);
     }
 }
+if (!function_exists('getIPAddress')) {
+    /**
+     * Function getIPAddress
+     *
+     * @param false $convertToInteger
+     *
+     * @return bool|int|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 25:27
+     */
+    function getIPAddress($convertToInteger = false)
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->getIpAddress($convertToInteger);
+    }
+}
 if (!function_exists('getIpByHaProxy')) {
     /**
      * Function getIpByHaProxy
@@ -43,6 +61,24 @@ if (!function_exists('getIpByHaProxy')) {
         return $ip->getIpByHaProxy($convertToInteger);
     }
 }
+if (!function_exists('getIPByHaProxy')) {
+    /**
+     * Function getIPByHaProxy
+     *
+     * @param false $convertToInteger
+     *
+     * @return bool|int|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 25:27
+     */
+    function getIPByHaProxy($convertToInteger = false)
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->getIpByHaProxy($convertToInteger);
+    }
+}
 if (!function_exists('getRawIpAddress')) {
     /**
      * Function getRawIpAddress
@@ -55,6 +91,24 @@ if (!function_exists('getRawIpAddress')) {
      * @time     : 09/20/2021 25:27
      */
     function getRawIpAddress($convertToInteger = false)
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->getRawIpAddress($convertToInteger);
+    }
+}
+if (!function_exists('getRawIPAddress')) {
+    /**
+     * Function getRawIPAddress
+     *
+     * @param false $convertToInteger
+     *
+     * @return bool|int|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 25:27
+     */
+    function getRawIPAddress($convertToInteger = false)
     {
         $ip = new nguyenanhung\Libraries\IP\IP();
 
@@ -117,6 +171,24 @@ if (!function_exists('ipValidate')) {
         return $ip->ipValidate($ip_address);
     }
 }
+if (!function_exists('validateIP')) {
+    /**
+     * Function validateIP
+     *
+     * @param string $ip_address
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 28:12
+     */
+    function validateIP($ip_address = '')
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->ipValidate($ip_address);
+    }
+}
 if (!function_exists('ipValidateV4')) {
     /**
      * Function ipValidateV4
@@ -135,6 +207,24 @@ if (!function_exists('ipValidateV4')) {
         return $ip->ipValidateV4($ip_address);
     }
 }
+if (!function_exists('validateIPV4')) {
+    /**
+     * Function validateIPV4
+     *
+     * @param string $ip_address
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 28:12
+     */
+    function validateIPV4($ip_address = '')
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->ipValidateV4($ip_address);
+    }
+}
 if (!function_exists('ipValidateV6')) {
     /**
      * Function ipValidateV6
@@ -147,6 +237,24 @@ if (!function_exists('ipValidateV6')) {
      * @time     : 09/20/2021 28:12
      */
     function ipValidateV6($ip_address = '')
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->ipValidateV6($ip_address);
+    }
+}
+if (!function_exists('validateIPV6')) {
+    /**
+     * Function validateIPV6
+     *
+     * @param string $ip_address
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 28:12
+     */
+    function validateIPV6($ip_address = '')
     {
         $ip = new nguyenanhung\Libraries\IP\IP();
 
