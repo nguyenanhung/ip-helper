@@ -324,4 +324,19 @@ class IP
 
         }
     }
+
+    /**
+     * Function getIpInformation
+     *
+     * @param string $ip
+     *
+     * @return string|null
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 33:03
+     */
+    public static function getIpInformation($ip = '')
+    {
+        return (new IP)->ipInfo($ip);
+    }
 }
