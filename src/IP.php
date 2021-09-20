@@ -310,7 +310,9 @@ class IP
                 CURLOPT_TIMEOUT        => 30,
                 CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
                 CURLOPT_CUSTOMREQUEST  => "GET",
-                CURLOPT_HTTPHEADER     => array(),
+                CURLOPT_HTTPHEADER     => array(
+                    'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36'
+                ),
             ));
 
             $response = curl_exec($curl);
