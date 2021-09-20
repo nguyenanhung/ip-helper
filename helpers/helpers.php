@@ -189,3 +189,22 @@ if (!function_exists('getIpInformation')) {
         return $ip->ipInfo($ip_address);
     }
 }
+if (!function_exists('getRegionOfIPUseIPInfo')) {
+    /**
+     * Function getRegionOfIPUseIPInfo
+     *
+     * @param string $ip_address
+     * @param string $token
+     *
+     * @return false|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 41:03
+     */
+    function getRegionOfIPUseIPInfo($ip_address = '', $token = '')
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->getRegionOfIp($ip_address, $token);
+    }
+}

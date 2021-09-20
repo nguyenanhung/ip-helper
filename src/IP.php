@@ -282,6 +282,66 @@ class IP
     }
 
     /**
+     * Function getRegionOfIP use IPInfo API
+     *
+     * @param string $ip
+     * @param string $apiToken
+     *
+     * @return false|mixed
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 09/20/2021 39:34
+     */
+    public function getRegionOfIp($ip = '', $apiToken = '')
+    {
+        if (empty($ip)) {
+            return false;
+        }
+        try {
+            $url      = 'https://ipinfo.io/' . $ip;
+            $params   = array('token' => $apiToken);
+            $endpoint = $url . '?' . http_build_query($params);
+            $curl     = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_URL            => $endpoint,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING       => "",
+                CURLOPT_MAXREDIRS      => 10,
+                CURLOPT_TIMEOUT        => 30,
+                CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST  => "GET",
+                CURLOPT_HTTPHEADER     => array(),
+            ));
+
+            $response = curl_exec($curl);
+            $err      = curl_error($curl);
+            curl_close($curl);
+            if ($err) {
+                $message = "cURL Error #:" . $err;
+                if (function_exists('log_message')) {
+                    log_message('error', $message);
+                }
+
+                return false;
+            }
+
+            $result = json_decode($response, true);
+            if (isset($result['region'])) {
+                return $result['region'];
+            }
+
+            return false;
+        } catch (Exception $e) {
+            $message = 'Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
+            if (function_exists('log_message')) {
+                log_message('error', $message);
+            }
+
+            return false;
+        }
+    }
+
+    /**
      * Function ipInfo
      *
      * @param string $ip
