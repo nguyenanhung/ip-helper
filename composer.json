@@ -28,6 +28,9 @@
     "autoload": {
         "psr-4": {
             "nguyenanhung\\Libraries\\IP\\": "src/"
-        }
+        },
+        "files": [
+            "helpers/helpers.php"
+        ]
     }
 }

@@ -39,6 +39,23 @@ class IP
     }
 
     /**
+     * Function setHaProxy
+     *
+     * @param bool $haProxyStatus
+     *
+     * @return $this
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 08/08/2020 44:11
+     */
+    public function setHaProxy($haProxyStatus = false)
+    {
+        $this->haProxyStatus = $haProxyStatus;
+
+        return $this;
+    }
+
+    /**
      * Function getIpAddress
      *
      * @param bool $convertToInteger
@@ -57,23 +74,6 @@ class IP
         }
 
         return $ip;
-    }
-
-    /**
-     * Function setHaProxy
-     *
-     * @param bool $haProxyStatus
-     *
-     * @return $this
-     * @author   : 713uk13m <dev@nguyenanhung.com>
-     * @copyright: 713uk13m <dev@nguyenanhung.com>
-     * @time     : 08/08/2020 44:11
-     */
-    public function setHaProxy($haProxyStatus = false)
-    {
-        $this->haProxyStatus = $haProxyStatus;
-
-        return $this;
     }
 
     /**
@@ -171,6 +171,7 @@ class IP
             if ($address === null || $range === null) {
                 return null;
             }
+
             return $address->matches($range);
         } catch (Exception $e) {
             $result = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
