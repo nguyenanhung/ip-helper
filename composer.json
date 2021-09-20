@@ -1,0 +1,33 @@
+{
+    "type": "library",
+    "name": "nguyenanhung/ip-helper",
+    "description": "Light, Simple and Small IP Helper",
+    "keywords": [
+        "helper",
+        "ip",
+        "php"
+    ],
+    "homepage": "https://github.com/nguyenanhung/ip-helper",
+    "license": "MIT",
+    "minimum-stability": "stable",
+    "authors": [
+        {
+            "name": "Nguyen An Hung",
+            "email": "dev@nguyenanhung.com",
+            "homepage": "https://nguyenanhung.com",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.6",
+        "ext-curl": "*",
+        "ext-json": "*",
+        "markrogoyski/ipv4-subnet-calculator": "^3.1",
+        "mlocati/ip-lib": "^1.17"
+    },
+    "autoload": {
+        "psr-4": {
+            "nguyenanhung\\Libraries\\IP\\": "src/"
+        }
+    }
+}
