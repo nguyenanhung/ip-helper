@@ -49,7 +49,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 08/08/2020 44:11
          */
-        public function setHaProxy($haProxyStatus = false)
+        public function setHaProxy(bool $haProxyStatus = false): IP
         {
             $this->haProxyStatus = $haProxyStatus;
 
@@ -66,7 +66,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 08/08/2020 43:50
          */
-        public function getIpAddress($convertToInteger = false)
+        public function getIpAddress(bool $convertToInteger = false)
         {
             if ($this->haProxyStatus === true) {
                 $ip = $this->getIpByHaProxy($convertToInteger);
@@ -87,7 +87,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 09/07/2021 58:38
          */
-        public function getIpByHaProxy($convertToInteger = false)
+        public function getIpByHaProxy(bool $convertToInteger = false)
         {
             $key = 'HTTP_X_FORWARDED_FOR';
             if (array_key_exists($key, $_SERVER) === true) {
@@ -116,7 +116,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 09/07/2021 58:45
          */
-        public function getRawIpAddress($convertToInteger = false)
+        public function getRawIpAddress(bool $convertToInteger = false)
         {
             $ip_keys = array(
                 0 => 'HTTP_CF_CONNECTING_IP',
@@ -159,7 +159,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 09/20/2021 07:43
          */
-        public function ipInRange($ip_address = '', $network_range = '')
+        public function ipInRange(string $ip_address = '', string $network_range = '')
         {
             $ip_address    = trim($ip_address);
             $network_range = trim($network_range);
@@ -223,7 +223,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 08/08/2020 47:25
          */
-        public function ipValidate($ip)
+        public function ipValidate($ip): bool
         {
             return !(filter_var($ip, FILTER_VALIDATE_IP) === false);
         }
@@ -238,7 +238,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 08/08/2020 47:31
          */
-        public function ipValidateV4($ip)
+        public function ipValidateV4($ip): bool
         {
             return !(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV4) === false);
         }
@@ -253,7 +253,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 08/08/2020 47:40
          */
-        public function ipValidateV6($ip)
+        public function ipValidateV6($ip): bool
         {
             return !(filter_var($ip, FILTER_VALIDATE_IP, FILTER_FLAG_IPV6) === false);
         }
@@ -268,7 +268,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 08/08/2020 47:45
          */
-        public function ip2longV6($ip)
+        public function ip2longV6($ip): string
         {
             if (substr_count($ip, '::')) {
                 $ip = str_replace('::', str_repeat(':0000', 8 - substr_count($ip, ':')) . ':', $ip);
@@ -293,7 +293,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 09/20/2021 39:34
          */
-        public function getRegionOfIp($ip = '', $apiToken = '')
+        public function getRegionOfIp(string $ip = '', string $apiToken = '')
         {
             if (empty($ip)) {
                 return false;
@@ -329,11 +329,8 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                 }
 
                 $result = json_decode($response, true);
-                if (isset($result['region'])) {
-                    return $result['region'];
-                }
 
-                return false;
+                return $result['region'] ?? false;
             } catch (Exception $e) {
                 $message = 'Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
                 if (function_exists('log_message')) {
@@ -354,7 +351,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 09/20/2021 14:49
          */
-        public function ipInfo($ip = '')
+        public function ipInfo(string $ip = '')
         {
             try {
                 $ipUrl = 'http://ip-api.com/json/' . $ip;
@@ -398,7 +395,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          * @copyright: 713uk13m <dev@nguyenanhung.com>
          * @time     : 09/20/2021 33:03
          */
-        public static function getIpInformation($ip = '')
+        public static function getIpInformation(string $ip = '')
         {
             return (new IP)->ipInfo($ip);
         }

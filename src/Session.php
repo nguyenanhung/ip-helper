@@ -42,7 +42,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\Session')) {
          *
          * @return bool
          */
-        public static function sessionStarted()
+        public static function sessionStarted(): bool
         {
             return PHP_SESSION_NONE === session_status() || '' === session_id();
         }
