@@ -334,7 +334,7 @@ if (!function_exists('checkCurrentIPIsLocalhost')) {
         return $ip->isLocalhost($ip_address);
     }
 }
-if (!function_exists('checkCurrentIPIsLocalhost')) {
+if (!function_exists('getCurrentServerIP')) {
     /**
      * Function getCurrentServerIP
      *
