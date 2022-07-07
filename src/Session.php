@@ -169,7 +169,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\Session')) {
         public static function delete($name)
         {
             $output = self::get($name);
-            if (null !== $output && is_array($output)) {
+            if (is_array($output)) {
                 foreach ($output as $item) {
                     if (self::exists($item)) {
                         unset($_SESSION[(string) $item]);
