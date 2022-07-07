@@ -226,6 +226,85 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
         }
 
         /**
+         * Function ipInRangeWithPhpRaw
+         *
+         * @param string $ip
+         * @param string $range
+         *
+         * @return bool
+         * @author: 713uk13m <dev@nguyenanhung.com>
+         * @time  : 9/20/18 14:38
+         *
+         */
+        function ipInRangeWithPhpRaw($ip = '', $range = '')
+        {
+            if (strpos($range, '/') === false) {
+                $range .= '/32';
+            }
+            // $range is in IP/CIDR format eg 127.0.0.1/24
+            list($range, $netmask) = explode('/', $range, 2);
+            $range_decimal    = ip2long($range);
+            $ip_decimal       = ip2long($ip);
+            $wildcard_decimal = pow(2, (32 - $netmask)) - 1;
+            $netmask_decimal  = ~$wildcard_decimal;
+
+            return (($ip_decimal & $netmask_decimal) == ($range_decimal & $netmask_decimal));
+        }
+
+        /**
+         * Function ipv6InRangeWithPhpRaw
+         *
+         * @param string $ip
+         * @param string $range
+         *
+         * @return bool
+         * @author: 713uk13m <dev@nguyenanhung.com>
+         * @time  : 9/20/18 14:38
+         *
+         */
+        function ipv6InRangeWithPhpRaw($ip = '', $range = '')
+        {
+            $pieces     = explode("/", $range, 2);
+            $left_piece = $pieces[0];
+            // $right_piece = $pieces[1];
+            // Extract out the main IP pieces
+            $ip_pieces     = explode("::", $left_piece, 2);
+            $main_ip_piece = $ip_pieces[0];
+            $last_ip_piece = $ip_pieces[1];
+            // Pad out the shorthand entries.
+            $main_ip_pieces = explode(":", $main_ip_piece);
+            foreach ($main_ip_pieces as $key => $val) {
+                $main_ip_pieces[$key] = str_pad($main_ip_pieces[$key], 4, "0", STR_PAD_LEFT);
+            }
+            // Create the first and last pieces that will denote the IPV6 range.
+            $first = $main_ip_pieces;
+            $last  = $main_ip_pieces;
+            // Check to see if the last IP block (part after ::) is set
+            $last_piece = "";
+            $size       = count($main_ip_pieces);
+            if (trim($last_ip_piece) != "") {
+                $last_piece .= str_pad($last_ip_piece, 4, "0", STR_PAD_LEFT);
+                // Build the full form of the IPV6 address considering the last IP block set
+                for ($i = $size; $i < 7; $i++) {
+                    $first[$i] = "0000";
+                    $last[$i]  = "ffff";
+                }
+                $main_ip_pieces[7] = $last_piece;
+            } else {
+                // Build the full form of the IPV6 address
+                for ($i = $size; $i < 8; $i++) {
+                    $first[$i] = "0000";
+                    $last[$i]  = "ffff";
+                }
+            }
+            // Rebuild the final long form IPV6 address
+            $first = $this->ip2longV6(implode(":", $first));
+            $last  = $this->ip2longV6(implode(":", $last));
+
+            return ($ip >= $first && $ip <= $last);
+        }
+
+        /**
          * Function ipCalculator
          *
          * @param $ip
