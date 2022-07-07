@@ -316,3 +316,38 @@ if (!function_exists('getRegionOfIPUseIPInfo')) {
         return $ip->getRegionOfIp($ip_address, $token);
     }
 }
+if (!function_exists('checkCurrentIPIsLocalhost')) {
+    /**
+     * Function checkCurrentIPIsLocalhost
+     *
+     * @param $ip_address
+     *
+     * @return bool
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 08/07/2022 38:29
+     */
+    function checkCurrentIPIsLocalhost($ip_address = '')
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->isLocalhost($ip_address);
+    }
+}
+if (!function_exists('getCurrentServerIP')) {
+    /**
+     * Function getCurrentServerIP
+     *
+     * @return array|false|mixed|string
+     * @author   : 713uk13m <dev@nguyenanhung.com>
+     * @copyright: 713uk13m <dev@nguyenanhung.com>
+     * @time     : 08/07/2022 38:52
+     */
+    function getCurrentServerIP()
+    {
+        $ip = new nguyenanhung\Libraries\IP\IP();
+
+        return $ip->getServerIP();
+    }
+}
+

@@ -40,6 +40,40 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
         }
 
         /**
+         * Function getENV
+         *
+         * @param $key
+         *
+         * @return array|false|mixed|string
+         * @author   : 713uk13m <dev@nguyenanhung.com>
+         * @copyright: 713uk13m <dev@nguyenanhung.com>
+         * @time     : 08/07/2022 32:44
+         */
+        private function getENV($key)
+        {
+            if (isset($_SERVER[$key])) {
+                if (strpos($_SERVER[$key], ',')) {
+                    $_arr = explode(',', $_SERVER[$key]);
+
+                    return trim($_arr[0]);
+                }
+
+                return $_SERVER[$key];
+            }
+            if (isset($_ENV[$key])) {
+                return $_ENV[$key];
+            }
+            if (@getenv($key)) {
+                return @getenv($key);
+            }
+            if (function_exists('apache_getenv') and apache_getenv($key, true)) {
+                return apache_getenv($key, true);
+            }
+
+            return '';
+        }
+
+        /**
          * Function setHaProxy
          *
          * @param bool $haProxyStatus
@@ -102,6 +136,9 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                     }
                 }
             }
+            if ($_SERVER['SERVER_NAME'] == 'localhost') {
+                return '127.0.0.1';
+            }
 
             return false;
         }
@@ -143,6 +180,9 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                         }
                     }
                 }
+            }
+            if ($_SERVER['SERVER_NAME'] == 'localhost') {
+                return '127.0.0.1';
             }
 
             return false;
@@ -383,6 +423,49 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                 return 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
 
             }
+        }
+
+        /**
+         * Function isLocalhost - Current IP Connect is Localhost
+         *
+         * @param string $ip
+         *
+         * @return bool
+         * @author   : 713uk13m <dev@nguyenanhung.com>
+         * @copyright: 713uk13m <dev@nguyenanhung.com>
+         * @time     : 08/07/2022 31:05
+         */
+        public function isLocalhost(string $ip = ''): bool
+        {
+            if (empty($ip)) {
+                $ip = $this->getIpAddress();
+            }
+
+            return substr($ip, 0, 4) == '127.' or $ip == '::1';
+        }
+
+        /**
+         * Function getServerIP
+         *
+         * @return array|false|mixed|string
+         * @author   : 713uk13m <dev@nguyenanhung.com>
+         * @copyright: 713uk13m <dev@nguyenanhung.com>
+         * @time     : 08/07/2022 33:34
+         */
+        public function getServerIP()
+        {
+            $serverip = $this->getENV('SERVER_ADDR');
+            if ($this->ipValidate($serverip)) {
+                return $serverip;
+            }
+            if ($_SERVER['SERVER_NAME'] == 'localhost') {
+                return '127.0.0.1';
+            }
+            if (function_exists('gethostbyname')) {
+                return gethostbyname($_SERVER['SERVER_NAME']);
+            }
+
+            return 'none';
         }
 
         /**
