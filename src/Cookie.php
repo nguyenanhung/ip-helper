@@ -48,7 +48,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\Cookie')) {
         public static function exists($name)
         {
             if (is_array($name)) {
-                $output = [];
+                $output = array();
                 foreach ($name as $item) {
                     $output[(string) $item] = isset($_COOKIE[(string) $item]);
                 }
@@ -72,15 +72,15 @@ if (!class_exists('nguyenanhung\Libraries\IP\Cookie')) {
         public static function get($name)
         {
             if (is_array($name)) {
-                $output = [];
+                $output = array();
                 foreach ($name as $item) {
-                    $output[(string) $item] = self::exists($item) ? $_COOKIE[(string) $item] : NULL;
+                    $output[(string) $item] = self::exists($item) ? $_COOKIE[(string) $item] : null;
                 }
 
                 return $output;
             }
 
-            return self::exists($name) ? $_COOKIE[(string) $name] : NULL;
+            return self::exists($name) ? $_COOKIE[(string) $name] : null;
         }
     }
 }

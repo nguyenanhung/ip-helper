@@ -44,7 +44,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\Session')) {
          */
         public static function sessionStarted()
         {
-            return PHP_SESSION_NONE === session_status() || '' === session_id();
+            return '' === session_id();
         }
 
         public static function has($name)
@@ -65,7 +65,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\Session')) {
         public static function exists($name)
         {
             if (is_array($name)) {
-                $output = [];
+                $output = array();
                 foreach ($name as $item) {
                     $output[(string) $item] = isset($_SESSION[(string) $item]);
                 }
@@ -89,7 +89,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\Session')) {
         public static function get($name)
         {
             if (is_array($name)) {
-                $output = [];
+                $output = array();
                 foreach ($name as $item) {
                     $output[(string) $item] = self::exists($item) ? $_SESSION[(string) $item] : null;
                 }
@@ -194,7 +194,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\Session')) {
         {
             if (self::sessionStarted()) {
                 session_destroy();
-                $_SESSION = [];
+                $_SESSION = array();
             }
         }
     }
