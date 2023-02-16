@@ -134,7 +134,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                     }
                 }
             }
-            if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'localhost') {
+            if (array_key_exists('SERVER_NAME', $_SERVER) && $_SERVER['SERVER_NAME'] === 'localhost') {
                 return '127.0.0.1';
             }
 
@@ -179,7 +179,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                     }
                 }
             }
-            if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'localhost') {
+            if (array_key_exists('SERVER_NAME', $_SERVER) && $_SERVER['SERVER_NAME'] === 'localhost') {
                 return '127.0.0.1';
             }
 
@@ -199,14 +199,14 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          */
         public function ipInRange(string $ip_address = '', string $network_range = '')
         {
-            $ip_address    = trim($ip_address);
+            $ip_address = trim($ip_address);
             $network_range = trim($network_range);
             if (empty($ip_address) || empty($network_range)) {
                 return null;
             }
             try {
                 $address = Factory::parseAddressString($ip_address);
-                $range   = Factory::parseRangeString($network_range);
+                $range = Factory::parseRangeString($network_range);
                 if ($address === null || $range === null) {
                     return null;
                 }
@@ -241,10 +241,10 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
             }
             // $range is in IP/CIDR format eg 127.0.0.1/24
             list($range, $netmask) = explode('/', $range, 2);
-            $range_decimal    = ip2long($range);
-            $ip_decimal       = ip2long($ip);
+            $range_decimal = ip2long($range);
+            $ip_decimal = ip2long($ip);
             $wildcard_decimal = pow(2, (32 - $netmask)) - 1;
-            $netmask_decimal  = ~$wildcard_decimal;
+            $netmask_decimal = ~$wildcard_decimal;
 
             return (($ip_decimal & $netmask_decimal) == ($range_decimal & $netmask_decimal));
         }
@@ -262,11 +262,11 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          */
         function ipv6InRangeWithPhpRaw(string $ip = '', string $range = ''): bool
         {
-            $pieces     = explode("/", $range, 2);
+            $pieces = explode("/", $range, 2);
             $left_piece = $pieces[0];
             // $right_piece = $pieces[1];
             // Extract out the main IP pieces
-            $ip_pieces     = explode("::", $left_piece, 2);
+            $ip_pieces = explode("::", $left_piece, 2);
             $main_ip_piece = $ip_pieces[0];
             $last_ip_piece = $ip_pieces[1];
             // Pad out the shorthand entries.
@@ -276,28 +276,28 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
             }
             // Create the first and last pieces that will denote the IPV6 range.
             $first = $main_ip_pieces;
-            $last  = $main_ip_pieces;
+            $last = $main_ip_pieces;
             // Check to see if the last IP block (part after ::) is set
             $last_piece = "";
-            $size       = count($main_ip_pieces);
+            $size = count($main_ip_pieces);
             if (trim($last_ip_piece) != "") {
                 $last_piece .= str_pad($last_ip_piece, 4, "0", STR_PAD_LEFT);
                 // Build the full form of the IPV6 address considering the last IP block set
                 for ($i = $size; $i < 7; $i++) {
                     $first[$i] = "0000";
-                    $last[$i]  = "ffff";
+                    $last[$i] = "ffff";
                 }
                 $main_ip_pieces[7] = $last_piece;
             } else {
                 // Build the full form of the IPV6 address
                 for ($i = $size; $i < 8; $i++) {
                     $first[$i] = "0000";
-                    $last[$i]  = "ffff";
+                    $last[$i] = "ffff";
                 }
             }
             // Rebuild the final long form IPV6 address
             $first = $this->ip2longV6(implode(":", $first));
-            $last  = $this->ip2longV6(implode(":", $last));
+            $last = $this->ip2longV6(implode(":", $last));
 
             return ($ip >= $first && $ip <= $last);
         }
@@ -390,7 +390,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
             if (substr_count($ip, '::')) {
                 $ip = str_replace('::', str_repeat(':0000', 8 - substr_count($ip, ':')) . ':', $ip);
             }
-            $ip   = explode(':', $ip);
+            $ip = explode(':', $ip);
             $r_ip = '';
             foreach ($ip as $v) {
                 $r_ip .= str_pad(base_convert($v, 16, 2), 16, 0, STR_PAD_LEFT);
@@ -416,10 +416,10 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                 return false;
             }
             try {
-                $url      = 'https://ipinfo.io/' . $ip;
-                $params   = array('token' => $apiToken);
+                $url = 'https://ipinfo.io/' . $ip;
+                $params = array('token' => $apiToken);
                 $endpoint = $url . '?' . http_build_query($params);
-                $curl     = curl_init();
+                $curl = curl_init();
                 curl_setopt_array($curl, array(
                     CURLOPT_URL            => $endpoint,
                     CURLOPT_RETURNTRANSFER => true,
@@ -434,7 +434,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                 ));
 
                 $response = curl_exec($curl);
-                $err      = curl_error($curl);
+                $err = curl_error($curl);
                 curl_close($curl);
                 if ($err) {
                     $message = "cURL Error #:" . $err;
@@ -472,7 +472,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
         {
             try {
                 $ipUrl = 'http://ip-api.com/json/' . $ip;
-                $curl  = curl_init();
+                $curl = curl_init();
 
                 curl_setopt_array($curl, array(
                     CURLOPT_URL            => $ipUrl,
@@ -485,7 +485,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                     CURLOPT_CUSTOMREQUEST  => 'GET',
                 ));
                 $response = curl_exec($curl);
-                $error    = curl_error($curl);
+                $error = curl_error($curl);
                 if ($error) {
                     return "Error";
                 }
@@ -535,10 +535,10 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
             if ($this->ipValidate($serverip)) {
                 return $serverip;
             }
-            if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] === 'localhost') {
+            if (array_key_exists('SERVER_NAME', $_SERVER) && $_SERVER['SERVER_NAME'] === 'localhost') {
                 return '127.0.0.1';
             }
-            if (function_exists('gethostbyname') && isset($_SERVER['SERVER_NAME'])) {
+            if (function_exists('gethostbyname') && array_key_exists('SERVER_NAME', $_SERVER)) {
                 return gethostbyname($_SERVER['SERVER_NAME']);
             }
 
