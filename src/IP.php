@@ -134,7 +134,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                     }
                 }
             }
-            if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] == 'localhost') {
+            if (array_key_exists('SERVER_NAME', $_SERVER) && $_SERVER['SERVER_NAME'] == 'localhost') {
                 return '127.0.0.1';
             }
 
@@ -179,7 +179,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                     }
                 }
             }
-            if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] == 'localhost') {
+            if (array_key_exists('SERVER_NAME', $_SERVER) && $_SERVER['SERVER_NAME'] == 'localhost') {
                 return '127.0.0.1';
             }
 
@@ -538,10 +538,10 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
             if ($this->ipValidate($serverip)) {
                 return $serverip;
             }
-            if (isset($_SERVER['SERVER_NAME']) && $_SERVER['SERVER_NAME'] == 'localhost') {
+            if (array_key_exists('SERVER_NAME', $_SERVER) && $_SERVER['SERVER_NAME'] == 'localhost') {
                 return '127.0.0.1';
             }
-            if (function_exists('gethostbyname') && isset($_SERVER['SERVER_NAME'])) {
+            if (function_exists('gethostbyname') && array_key_exists('SERVER_NAME', $_SERVER)) {
                 return gethostbyname($_SERVER['SERVER_NAME']);
             }
 

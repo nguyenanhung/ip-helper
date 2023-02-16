@@ -9,7 +9,6 @@
  */
 require_once __DIR__ . '/../vendor/autoload.php';
 
-
 echo "Helper getIpAddress: " . getIpAddress() . PHP_EOL;
 echo "Helper getIpByHaProxy: " . getIpByHaProxy() . PHP_EOL;
 echo "Helper getRawIpAddress: " . getRawIpAddress() . PHP_EOL;
