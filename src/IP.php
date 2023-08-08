@@ -50,7 +50,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
         private function getENV($key)
         {
             if (isset($_SERVER[$key])) {
-                if (strpos($_SERVER[$key], ',')) {
+                if (mb_strpos($_SERVER[$key], ',')) {
                     $_arr = explode(',', $_SERVER[$key]);
 
                     return trim($_arr[0]);
@@ -236,7 +236,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
          */
         function ipInRangeWithPhpRaw(string $ip = '', string $range = ''): bool
         {
-            if (strpos($range, '/') === false) {
+            if (mb_strpos($range, '/') === false) {
                 $range .= '/32';
             }
             // $range is in IP/CIDR format eg 127.0.0.1/24
@@ -518,7 +518,7 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                 $ip = $this->getIpAddress();
             }
 
-            return substr($ip, 0, 4) == '127.' or $ip == '::1';
+            return mb_substr($ip, 0, 4) == '127.' or $ip == '::1';
         }
 
         /**
