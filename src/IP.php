@@ -11,8 +11,8 @@
 namespace nguyenanhung\Libraries\IP;
 
 use Exception;
-use IPv4\SubnetCalculator;
 use IPLib\Factory;
+use IPv4\SubnetCalculator;
 
 if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
     /**
@@ -213,7 +213,8 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
 
                 return $address->matches($range);
             } catch (Exception $e) {
-                $result = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+                $result = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode(
+                    ) . ' - Message: ' . $e->getMessage();
                 if (function_exists('log_message')) {
                     log_message('error', 'Error Message: ' . $e->getMessage());
                     log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
@@ -320,7 +321,8 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
 
                 return $result->getSubnetArrayReport();
             } catch (Exception $e) {
-                $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
+                $message = 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode(
+                    ) . ' - Message: ' . $e->getMessage();
                 if (function_exists('log_message')) {
                     log_message('error', 'Error Message: ' . $e->getMessage());
                     log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
@@ -421,21 +423,23 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                 $endpoint = $url . '?' . http_build_query($params);
                 $curl = curl_init();
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL            => $endpoint,
+                    CURLOPT_URL => $endpoint,
                     CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING       => "",
-                    CURLOPT_MAXREDIRS      => 10,
-                    CURLOPT_TIMEOUT        => 30,
-                    CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST  => "GET",
-                    CURLOPT_HTTPHEADER     => array(
+                    CURLOPT_ENCODING => "",
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 30,
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => "GET",
+                    CURLOPT_HTTPHEADER => array(
                         'User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/93.0.4577.82 Safari/537.36'
                     ),
                 ));
 
                 $response = curl_exec($curl);
                 $err = curl_error($curl);
-                curl_close($curl);
+                if (PHP_VERSION_ID < 80000) {
+                    curl_close($curl);
+                }
                 if ($err) {
                     $message = "cURL Error #:" . $err;
                     if (function_exists('log_message')) {
@@ -449,7 +453,8 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
 
                 return $result['region'] ?? false;
             } catch (Exception $e) {
-                $message = 'Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Message: ' . $e->getMessage();
+                $message = 'Code: ' . $e->getCode() . ' - File: ' . $e->getFile() . ' - Line: ' . $e->getLine(
+                    ) . ' - Message: ' . $e->getMessage();
                 if (function_exists('log_message')) {
                     log_message('error', $message);
                 }
@@ -475,14 +480,14 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                 $curl = curl_init();
 
                 curl_setopt_array($curl, array(
-                    CURLOPT_URL            => $ipUrl,
+                    CURLOPT_URL => $ipUrl,
                     CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING       => '',
-                    CURLOPT_MAXREDIRS      => 10,
-                    CURLOPT_TIMEOUT        => 0,
+                    CURLOPT_ENCODING => '',
+                    CURLOPT_MAXREDIRS => 10,
+                    CURLOPT_TIMEOUT => 0,
                     CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION   => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_CUSTOMREQUEST  => 'GET',
+                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                    CURLOPT_CUSTOMREQUEST => 'GET',
                 ));
                 $response = curl_exec($curl);
                 $error = curl_error($curl);
@@ -497,8 +502,8 @@ if (!class_exists('nguyenanhung\Libraries\IP\IP')) {
                     log_message('error', 'Error Trace As String: ' . $e->getTraceAsString());
                 }
 
-                return 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode() . ' - Message: ' . $e->getMessage();
-
+                return 'Error File: ' . $e->getFile() . ' - Line: ' . $e->getLine() . ' - Code: ' . $e->getCode(
+                    ) . ' - Message: ' . $e->getMessage();
             }
         }
 

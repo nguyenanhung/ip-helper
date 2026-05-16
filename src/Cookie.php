@@ -23,12 +23,12 @@ if (!class_exists('nguyenanhung\Libraries\IP\Cookie')) {
         /**
          * Function has
          *
-         * @author: 713uk13m <dev@nguyenanhung.com>
-         * @time  : 2018-12-27 22:40
-         *
          * @param $name
          *
          * @return array|bool
+         * @author: 713uk13m <dev@nguyenanhung.com>
+         * @time  : 2018-12-27 22:40
+         *
          */
         public static function has($name)
         {
@@ -38,49 +38,49 @@ if (!class_exists('nguyenanhung\Libraries\IP\Cookie')) {
         /**
          * Function exists
          *
-         * @author: 713uk13m <dev@nguyenanhung.com>
-         * @time  : 2018-12-27 22:40
-         *
          * @param $name
          *
          * @return array|bool
+         * @author: 713uk13m <dev@nguyenanhung.com>
+         * @time  : 2018-12-27 22:40
+         *
          */
         public static function exists($name)
         {
             if (is_array($name)) {
                 $output = [];
                 foreach ($name as $item) {
-                    $output[(string) $item] = isset($_COOKIE[(string) $item]);
+                    $output[(string)$item] = isset($_COOKIE[(string)$item]);
                 }
 
                 return $output;
             }
 
-            return isset($_COOKIE[(string) $name]);
+            return isset($_COOKIE[(string)$name]);
         }
 
         /**
          * Function get
          *
-         * @author: 713uk13m <dev@nguyenanhung.com>
-         * @time  : 2018-12-27 22:40
-         *
          * @param $name
          *
          * @return array|null
+         * @author: 713uk13m <dev@nguyenanhung.com>
+         * @time  : 2018-12-27 22:40
+         *
          */
         public static function get($name)
         {
             if (is_array($name)) {
                 $output = [];
                 foreach ($name as $item) {
-                    $output[(string) $item] = self::exists($item) ? $_COOKIE[(string) $item] : NULL;
+                    $output[(string)$item] = self::exists($item) ? $_COOKIE[(string)$item] : null;
                 }
 
                 return $output;
             }
 
-            return self::exists($name) ? $_COOKIE[(string) $name] : NULL;
+            return self::exists($name) ? $_COOKIE[(string)$name] : null;
         }
     }
 }
